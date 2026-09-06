@@ -61,7 +61,11 @@ public class ChatbotService
             intent = "sentiment";
             return $"I understand, {UserName}. Online security can feel confusing, but taking small steps like using strong passwords, checking links carefully, and enabling multi-factor authentication can make a big difference.";
         }
-
+        if (ContainsAny(lower, "what is my favourite topic", "what is my favorite topic", "what topic do i like"))
+        {
+            intent = "memory";
+            return $"Your favourite cybersecurity topic is {FavouriteTopic}.";
+        }
         if (ContainsAny(lower, "how are you", "how are u"))
         {
             intent = "general";

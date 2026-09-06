@@ -435,10 +435,12 @@ public partial class MainWindow : Window
         QuizQuestion.Text = "Quiz complete!";
         QuizOptions.Children.Clear();
         QuizProgress.Text = "Finished";
-        QuizFinalScore.Text = $"Final score: {_quizScore}/{_quizQuestions.Count}. " +
-                              (_quizScore >= _quizQuestions.Count * 0.8
-                                  ? "Great job! You have a strong cybersecurity awareness foundation."
-                                  : "Keep learning to strengthen your cybersecurity awareness.");
+        double quizPercentage = (_quizScore * 100.0) / _quizQuestions.Count;
+
+        QuizFinalScore.Text = $"Final score: {_quizScore}/{_quizQuestions.Count} ({quizPercentage:0}%). " +
+            (quizPercentage >= 80
+                ? "Great job! You have a strong cybersecurity awareness foundation."
+                : "Keep learning to strengthen your cybersecurity awareness.");
         QuizFeedback.Text = "Review the chatbot topics and try the quiz again to improve your score.";
         NextQuizButton.Content = "Restart Quiz";
         _quizIndex = -1;

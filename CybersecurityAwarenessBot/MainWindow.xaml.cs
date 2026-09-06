@@ -280,6 +280,11 @@ public partial class MainWindow : Window
             MessageBox.Show("Please enter a task title.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
+        if (string.IsNullOrWhiteSpace(TaskDescriptionBox.Text))
+        {
+            MessageBox.Show("Please enter a task description.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
 
         var task = new CyberTask
         {

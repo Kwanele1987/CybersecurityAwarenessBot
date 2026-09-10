@@ -1,138 +1,66 @@
 # Cybersecurity Awareness Assistant
 
-## Student Information
+## PROG6221/w – Programming 2A
 
-**Student Name:** Kwanele Langa  
-**Student Number:** ST10500677  
-**Project:** Cybersecurity Awareness Assistant  
-**Language:** C#  
-**Framework:** .NET 8  
-**GUI:** WPF  
-**Database:** MySQL  
+**Student:** Kwanele Langa  
+**Student Number:** ST10500677
 
----
+## Overview
 
-## 1. Project Overview
+The Cybersecurity Awareness Assistant is a C# application designed to help users learn about common cybersecurity topics through an interactive chatbot and practical features.
 
-The Cybersecurity Awareness Assistant is a C# application designed to help users learn about basic cybersecurity concepts through an interactive chatbot, tasks and reminders, a cybersecurity quiz, and an activity log.
+The project includes a command-line chatbot for Part 1 and a WPF graphical application for the final project. The WPF application brings together the chatbot, cybersecurity quiz, task assistant, MySQL storage and activity logging.
 
-The project was developed in stages. Part 1 provides a command-line chatbot, while the main application provides a WPF graphical user interface with additional cybersecurity awareness features.
+## Main Features
 
-The application focuses on topics such as:
+### Part 1 – Console Chatbot
 
-- Password safety
-- Phishing
-- Online scams
-- Privacy
-- Safe browsing
-- Multi-factor authentication
-- Cybersecurity tasks and reminders
-- Cybersecurity knowledge testing
+- Recorded voice greeting using a WAV file
+- Cybersecurity-themed ASCII logo
+- Personalised greeting using the user's name
+- Keyword-based cybersecurity responses
+- Input validation and fallback responses
+- Separate classes for the chatbot, user profile, response handling, voice greeting and ASCII art
 
----
+### WPF Application
 
-## 2. Main Features
+- Graphical chatbot interface
+- Cybersecurity keyword recognition
+- Varied/random chatbot responses
+- Conversation follow-up handling
+- Memory for the user's name and favourite cybersecurity topic
+- Simple sentiment detection
+- Support for cybersecurity-related tasks
+- Cybersecurity quiz with 12 questions
+- Activity log for recent application actions
 
-### Chatbot
+### Task Assistant and MySQL
 
-The chatbot allows the user to ask cybersecurity-related questions and receive relevant responses.
+The Task Assistant allows users to:
 
-The chatbot supports:
-
-- Password safety questions
-- Phishing information
-- Scam awareness
-- Privacy guidance
-- Safe browsing advice
-- General cybersecurity questions
-- Follow-up questions
-- User name personalisation
-- Favourite cybersecurity topic memory
-- Basic sentiment detection
-- Unsupported-input handling
-
-### Voice Greeting
-
-The application includes a voice greeting that can be played when the application starts or when the user selects the **Play Greeting** button.
-
-The recording is stored as:
-
-`Audio/greeting.wav`
-
-The voice greeting is recorded in the student's own voice.
-
-### ASCII Art
-
-The application includes an ASCII cybersecurity logo to provide a visual identity for the chatbot.
-
-### Task Assistant
-
-The Task Assistant allows the user to:
-
-- Add cybersecurity tasks
-- Add task descriptions
-- Set reminder dates
-- View existing tasks
+- Add cybersecurity-related tasks
+- Enter a task title and description
+- Set an optional reminder date
 - Mark tasks as completed
 - Delete tasks
 
-Tasks are stored in a MySQL database.
+Task information is stored in a MySQL database using the `MySqlTaskRepository` service.
 
-### Cybersecurity Quiz
-
-The application includes a cybersecurity knowledge quiz containing 12 questions.
-
-The quiz provides:
-
-- Multiple-choice questions
-- Immediate feedback
-- Correct and incorrect responses
-- Explanations after answers
-- A final score
-
-### Activity Log
-
-The Activity Log records recent actions performed in the application.
-
-Examples include:
-
-- Chatbot interactions
-- Sentiment detection
-- Follow-up detection
-- Tasks added
-- Tasks completed
-- Tasks deleted
-
----
-
-## 3. Project Structure
+## Project Structure
 
 ```text
 CybersecurityAwarenessBot
 │
 ├── CybersecurityAwarenessBot.sln
-│
 ├── CybersecurityAwarenessBot
 │   ├── App.xaml
 │   ├── MainWindow.xaml
 │   ├── MainWindow.xaml.cs
-│   │
 │   ├── Models
-│   │   ├── CyberTask.cs
-│   │   └── QuizQuestion.cs
-│   │
 │   ├── Services
-│   │   ├── ActivityLogService.cs
-│   │   ├── AsciiArtService.cs
-│   │   ├── ChatbotService.cs
-│   │   ├── MySqlTaskRepository.cs
-│   │   └── VoiceGreeting.cs
-│   │
 │   ├── Audio
-│   │   └── greeting.wav
-│   │
 │   ├── database.sql
-│   └── README.md
+│   └── CybersecurityAwarenessBot.csproj
 │
 └── CybersecurityAwarenessBot.Part1
     ├── Program.cs
@@ -141,6 +69,100 @@ CybersecurityAwarenessBot
     ├── UserProfile.cs
     ├── AsciiArt.cs
     ├── VoiceGreeting.cs
-    │
-    └── Audio
-        └── greeting.wav
+    ├── Audio
+    └── CybersecurityAwarenessBot.Part1.csproj
+```
+
+## Requirements
+
+- Windows
+- Visual Studio with .NET 8 support
+- MySQL Server
+- MySQL Workbench (recommended for database setup)
+- Internet connection for restoring NuGet packages
+
+## MySQL Setup
+
+1. Start the MySQL Server.
+2. Open MySQL Workbench.
+3. Open and run `database.sql` to create the `cybersecurity_bot` database and `tasks` table.
+4. Open `CybersecurityAwarenessBot/Services/MySqlTaskRepository.cs`.
+5. Update the MySQL connection settings so that the `Server`, `User` and `Password` values match your local MySQL installation.
+6. Build and run the WPF application.
+
+The application also attempts to create the database and `tasks` table automatically when it starts, provided the MySQL account has the required permissions.
+
+> **Security:** Do not commit a real database password to GitHub. Keep the password as a local value on your computer.
+
+## Voice Greeting
+
+The Part 1 and WPF applications support a recorded voice greeting.
+
+To use the feature, place the WAV file at:
+
+```text
+CybersecurityAwarenessBot.Part1/Audio/greeting.wav
+```
+
+and for the WPF application:
+
+```text
+CybersecurityAwarenessBot/Audio/greeting.wav
+```
+
+The WAV file is copied to the application's output directory automatically when the project is built.
+
+## Running the Solution
+
+1. Open `CybersecurityAwarenessBot.sln` in Visual Studio.
+2. Restore the NuGet packages if prompted.
+3. For the final WPF application, set `CybersecurityAwarenessBot` as the startup project.
+4. Build the solution.
+5. Press **F5** to run the application.
+
+### Running Part 1
+
+For the console chatbot demonstration:
+
+1. Set `CybersecurityAwarenessBot.Part1` as the startup project.
+2. Press **F5**.
+3. Enter a name when prompted.
+4. Try questions about phishing, passwords, safe browsing or the chatbot's purpose.
+
+## Example Chatbot Interactions
+
+The chatbot can respond to topics and commands such as:
+
+- `What is phishing?`
+- `Tell me about password safety`
+- `How can I browse safely?`
+- `What is your purpose?`
+- `I'm worried about online security`
+- `My favourite topic is phishing`
+- `What is my favourite topic?`
+- `Give me another tip`
+- `Show my tasks`
+- `Start quiz`
+- `Show activity log`
+
+## Cybersecurity Quiz
+
+The application includes a 12-question cybersecurity quiz. Each question provides feedback after an answer is selected, and the final result is displayed as both a score and percentage.
+
+## Activity Log
+
+The Activity Log records recent actions and interactions, including relevant chatbot activity and task actions. This provides a simple record of activity while the application is being used.
+
+## Version Control and CI
+
+The project is maintained using GitHub for version control. Meaningful commits were used to record development changes, and GitHub Actions is configured to build the solution automatically when repository changes are made.
+
+The project also contains version releases:
+
+- **v1.0** – Initial Project
+- **v1.1** – Chatbot Memory Enhancement
+- **v1.2** – Final Application Improvements
+
+## Presentation
+
+The project includes a video demonstration showing the application running and explaining its main functionality and logic. The presentation uses the student's own recorded voice.

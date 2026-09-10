@@ -12,7 +12,7 @@ public class MySqlTaskRepository
     private const string Password = "Kwanele1987%";
 
     private string ServerConnectionString =>
-        $"Server={Server};User ID={User};Password={Password};SslMode=None;";
+        $"Server={Server};User ID={User};Password={Password};SslMode=None;AllowPublicKeyRetrieval=True;";
 
     private string DatabaseConnectionString =>
         $"{ServerConnectionString}Database={Database};";

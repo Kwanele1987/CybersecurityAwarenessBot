@@ -1,151 +1,168 @@
 # Cybersecurity Awareness Assistant
-## PROG6221/w Programming 2A – POE
+
+## PROG6221/w – Programming 2A
 
 **Student:** Kwanele Langa  
 **Student Number:** ST10500677
 
-This solution contains the corrected Part 1 console implementation and the final WPF POE application. Part 1 has been restructured to follow the supplied Part 1 breakdown (steps 9–27), while the final WPF application retains the task assistant, quiz, NLP simulation, memory/sentiment handling and activity log.
+## Overview
 
-## Solution structure
+The Cybersecurity Awareness Assistant is a C# application designed to help users learn about common cybersecurity topics through an interactive chatbot and practical features.
 
-```text
-CybersecurityAwarenessBot.sln
-│
-├── CybersecurityAwarenessBot.Part1
-│   ├── Program.cs
-│   ├── Chatbot.cs
-│   ├── ResponseHandler.cs
-│   ├── UserProfile.cs
-│   ├── AsciiArt.cs
-│   ├── VoiceGreeting.cs
-│   └── Audio
-│       ├── greeting.wav        <-- ADD YOUR OWN RECORDING
-│       └── README.txt
-│
-└── CybersecurityAwarenessBot
-    ├── MainWindow.xaml
-    ├── MainWindow.xaml.cs
-    ├── Models
-    ├── Services
-    │   ├── ChatbotService.cs
-    │   ├── VoiceGreeting.cs
-    │   ├── AsciiArtService.cs
-    │   ├── MySqlTaskRepository.cs
-    │   └── ActivityLogService.cs
-    ├── Audio
-    │   ├── greeting.wav        <-- ADD THE SAME OWN RECORDING
-    │   └── README.txt
-    └── database.sql
-```
+The project includes a command-line chatbot for Part 1 and a WPF graphical application for the final project. The WPF application brings together the chatbot, cybersecurity quiz, task assistant, MySQL storage and activity logging.
 
-## Part 1 – corrected to the supplied breakdown
+## Main Features
 
-The console project now follows the requested separation of responsibilities:
+### Part 1 – Console Chatbot
 
-- `Program.cs` starts the application through `Chatbot.Start()`.
-- `VoiceGreeting.cs` locates and plays `Audio/greeting.wav`.
-- `AsciiArt.cs` contains `DisplayLogo()`.
-- `UserProfile.cs` stores the user name using an automatic `Name` property.
-- `Chatbot.cs` controls the startup sequence and conversation loop.
-- `ResponseHandler.cs` converts input to lowercase, checks recognised questions/topics and returns responses.
-- Blank input is validated without crashing or terminating the program.
-- Unsupported questions receive a friendly default response.
-- Console colours and the optional typing effect are used consistently.
+- Recorded voice greeting using a WAV file
+- Cybersecurity-themed ASCII logo
+- Personalised greeting using the user's name
+- Keyword-based cybersecurity responses
+- Input validation and fallback responses
+- Separate classes for the chatbot, user profile, response handling, voice greeting and ASCII art
 
-The startup sequence is:
+### WPF Application
 
-```text
-Play voice greeting
-      ↓
-Display ASCII art
-      ↓
-Ask for user's name
-      ↓
-Validate name
-      ↓
-Display personalised greeting
-      ↓
-Start conversation loop
-```
+- Graphical chatbot interface
+- Cybersecurity keyword recognition
+- Varied/random chatbot responses
+- Conversation follow-up handling
+- Memory for the user's name and favourite cybersecurity topic
+- Simple sentiment detection
+- Support for cybersecurity-related tasks
+- Cybersecurity quiz with 12 questions
+- Activity log for recent application actions
 
-## Voice recording
+### Task Assistant and MySQL
 
-The voice recording is intentionally **not included yet**, because it must be your own voice.
+The Task Assistant allows users to:
 
-Record the suggested greeting in your own voice:
-
-> Hello! My name is Kwanele Langa. Welcome to the Cybersecurity Awareness Assistant. I am here to help you learn how to stay safe online.
-
-Save the file exactly as:
-
-`greeting.wav`
-
-and place it in both:
-
-- `CybersecurityAwarenessBot.Part1/Audio/`
-- `CybersecurityAwarenessBot/Audio/`
-
-The project files are already configured to copy the WAV file to the output directory when it is present. The applications also continue running if the recording has not been added yet.
-
-## Final POE application
-
-The WPF application includes:
-
-### Chatbot / NLP
-- Password safety responses
-- Phishing responses
-- Scam awareness
-- Privacy guidance
-- Safe browsing guidance
-- General questions
-- Keyword recognition
-- Random responses
-- Follow-up responses
-- Memory of the user's name and favourite topic
-- Simple sentiment detection for worried, curious and frustrated inputs
-- Graceful unknown-input handling
-
-### Task Assistant / MySQL
-- Add tasks
-- View tasks
-- Optional reminder date
-- Mark tasks completed
+- Add cybersecurity-related tasks
+- Enter a task title and description
+- Set an optional reminder date
+- Mark tasks as completed
 - Delete tasks
-- MySQL storage
 
-### Cybersecurity quiz
-- 12 questions
-- Multiple-choice / true-false style questions
-- Immediate feedback
-- Explanations
-- Score calculation
-- Final result
+Task information is stored in a MySQL database using the `MySqlTaskRepository` service.
 
-### Activity log
-- Records important interactions and actions
-- Displays the latest 10 activities
+## Project Structure
 
-## MySQL setup
+```text
+CybersecurityAwarenessBot
+│
+├── CybersecurityAwarenessBot.sln
+├── CybersecurityAwarenessBot
+│   ├── App.xaml
+│   ├── MainWindow.xaml
+│   ├── MainWindow.xaml.cs
+│   ├── Models
+│   ├── Services
+│   ├── Audio
+│   ├── database.sql
+│   └── CybersecurityAwarenessBot.csproj
+│
+└── CybersecurityAwarenessBot.Part1
+    ├── Program.cs
+    ├── Chatbot.cs
+    ├── ResponseHandler.cs
+    ├── UserProfile.cs
+    ├── AsciiArt.cs
+    ├── VoiceGreeting.cs
+    ├── Audio
+    └── CybersecurityAwarenessBot.Part1.csproj
+```
 
-1. Start MySQL Server.
+## Requirements
+
+- Windows
+- Visual Studio with .NET 8 support
+- MySQL Server
+- MySQL Workbench (recommended for database setup)
+- Internet connection for restoring NuGet packages
+
+## MySQL Setup
+
+1. Start the MySQL Server.
 2. Open MySQL Workbench.
-3. Run `database.sql`.
+3. Open and run `database.sql` to create the `cybersecurity_bot` database and `tasks` table.
 4. Open `CybersecurityAwarenessBot/Services/MySqlTaskRepository.cs`.
-5. Change the `User` and `Password` constants to match your MySQL installation.
-6. Build and run the WPF project.
+5. Update the MySQL connection settings so that the `Server`, `User` and `Password` values match your local MySQL installation.
+6. Build and run the WPF application.
 
-The application also attempts to create the database and `tasks` table automatically when it starts if the MySQL account has permission to do so.
+The application also attempts to create the database and `tasks` table automatically when it starts, provided the MySQL account has the required permissions.
 
-## Running the solution
+> **Security:** Do not commit a real database password to GitHub. Keep the password as a local value on your computer.
 
-1. Open `CybersecurityAwarenessBot.sln` in Visual Studio 2022.
-2. Restore NuGet packages.
-3. For the final POE, set `CybersecurityAwarenessBot` as the startup project.
-4. Press F5.
-5. For Part 1 demonstration, set `CybersecurityAwarenessBot.Part1` as the startup project and press F5.
+## Voice Greeting
 
-## Before submission
+The Part 1 and WPF applications support a recorded voice greeting.
 
-You still need to add your own `greeting.wav`, test the complete application on your computer, create the required GitHub commits/releases/tags, and prepare the required presentation using your own voice.
+To use the feature, place the WAV file at:
 
-The project cannot honestly be described as fully verified by compilation in this environment because Visual Studio/.NET SDK is not installed here. The source has been restructured against the supplied breakdown, but the final build should be performed in Visual Studio on your computer.
+```text
+CybersecurityAwarenessBot.Part1/Audio/greeting.wav
+```
+
+and for the WPF application:
+
+```text
+CybersecurityAwarenessBot/Audio/greeting.wav
+```
+
+The WAV file is copied to the application's output directory automatically when the project is built.
+
+## Running the Solution
+
+1. Open `CybersecurityAwarenessBot.sln` in Visual Studio.
+2. Restore the NuGet packages if prompted.
+3. For the final WPF application, set `CybersecurityAwarenessBot` as the startup project.
+4. Build the solution.
+5. Press **F5** to run the application.
+
+### Running Part 1
+
+For the console chatbot demonstration:
+
+1. Set `CybersecurityAwarenessBot.Part1` as the startup project.
+2. Press **F5**.
+3. Enter a name when prompted.
+4. Try questions about phishing, passwords, safe browsing or the chatbot's purpose.
+
+## Example Chatbot Interactions
+
+The chatbot can respond to topics and commands such as:
+
+- `What is phishing?`
+- `Tell me about password safety`
+- `How can I browse safely?`
+- `What is your purpose?`
+- `I'm worried about online security`
+- `My favourite topic is phishing`
+- `What is my favourite topic?`
+- `Give me another tip`
+- `Show my tasks`
+- `Start quiz`
+- `Show activity log`
+
+## Cybersecurity Quiz
+
+The application includes a 12-question cybersecurity quiz. Each question provides feedback after an answer is selected, and the final result is displayed as both a score and percentage.
+
+## Activity Log
+
+The Activity Log records recent actions and interactions, including relevant chatbot activity and task actions. This provides a simple record of activity while the application is being used.
+
+## Version Control and CI
+
+The project is maintained using GitHub for version control. Meaningful commits were used to record development changes, and GitHub Actions is configured to build the solution automatically when repository changes are made.
+
+The project also contains version releases:
+
+- **v1.0** – Initial Project
+- **v1.1** – Chatbot Memory Enhancement
+- **v1.2** – Final Application Improvements
+
+## Presentation
+
+The project includes a video demonstration showing the application running and explaining its main functionality and logic. The presentation uses the student's own recorded voice.
